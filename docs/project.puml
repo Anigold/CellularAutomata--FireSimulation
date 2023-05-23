@@ -1,0 +1,122 @@
+@startuml FireCellularAutomata
+
+class Environment {
+
+    - cellMatrix          
+
+    - pointsOfArson 
+
+    - generativeProbability
+    - burnoutProbability
+    - ignitionProbability
+    - resurrectionProbability
+
+    + getCellMatrix()
+    + getCell()
+    + cellExists()
+
+    + getVanNeumannNeighborhood()
+
+    + transitionProtocol()
+    + implementTranstions()
+
+    - loadCells()
+
+}
+
+package Cells {
+
+    abstract class Cell {
+        - xPosition
+        - yPosition
+
+        - rgb
+
+        + getColor()
+        + setColor()
+
+        + getXPosition()
+        + setXPosition()
+
+        + getYPosition()
+        + setYPosition()
+
+        + hashCode()
+    }
+}
+
+class Driver {
+
+    + environment
+    + controller
+    + window
+
+    - isRunning
+
+    - timer
+
+    + actionPerformed()
+    + start()
+    + stop()
+
+    + main()
+}
+
+
+package Graphics {
+
+    class Board {
+
+        - board
+        - cellSize
+
+        + getBoard()
+        + setBoard()
+
+        + paintComponent()
+        + doDrawing()
+
+        - setDefaults()
+
+    }
+
+    class DriverControls {
+
+        + buttonContainer
+        + pauseButton
+        + resetButton
+
+        + probabilityContainer
+        + generativeProbSlider
+        + ignitionProbSlider
+        + burnoutProbSlider
+        + resurrectionProbSlider
+
+        + cellContainer
+        
+        + buildButtonContainer()
+        + buildProbabilityContainer()
+        + buildCellContainer()
+
+        - cellFactory()
+
+    }
+
+    class Window {
+
+        + board
+        + driverControls
+
+        + loadWindow()
+    }
+}
+Window -> Driver::window
+Environment -> Driver::environment
+DriverControls -> Driver::controller
+
+Cells -> Environment::cellMatrix
+Environment::cellMatrix -> Board::board
+Board::board -> Window::board
+
+@enduml
+
